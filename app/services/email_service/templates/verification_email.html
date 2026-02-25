@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Verify Your Tech_Pulse Account</title>
+  </head>
+  <body style="margin: 0; padding: 0; background-color: #f3f6fb; color: #0f1a2b; font-family: 'Segoe UI', Tahoma, Arial, sans-serif;">
+    <!-- Preheader (hidden) -->
+    <div style="display: none; max-height: 0; overflow: hidden; opacity: 0; color: transparent;">
+      Verify your Tech_Pulse account and get started in seconds.
+    </div>
+
+    <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="background-color: #f3f6fb; padding: 24px 0;">
+      <tr>
+        <td align="center">
+          <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="600" style="width: 600px; max-width: 600px; background-color: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 30px rgba(15, 26, 43, 0.08);">
+            <!-- Header -->
+            <tr>
+              <td style="padding: 28px 36px; background: linear-gradient(135deg, #0f1a2b 0%, #1e3a8a 100%); color: #ffffff;">
+                <div style="font-size: 18px; font-weight: 700; letter-spacing: 0.3px;">Tech_Pulse</div>
+                <div style="font-size: 24px; font-weight: 700; margin-top: 8px;">Verify your account</div>
+                <div style="font-size: 14px; opacity: 0.9; margin-top: 6px;">One quick step to secure your access</div>
+              </td>
+            </tr>
+
+            <!-- Body -->
+            <tr>
+              <td style="padding: 28px 36px 8px 36px;">
+                <div style="font-size: 16px; line-height: 1.6;">
+                  Hi <span style="font-weight: 600;">{{ name }}</span>,
+                </div>
+                <div style="font-size: 16px; line-height: 1.6; margin-top: 8px;">
+                  Thanks for creating your Tech_Pulse account. Please confirm your email address to activate your profile and keep your account secure.
+                </div>
+
+                <div style="margin-top: 18px; padding: 14px 16px; background-color: #f8fafc; border: 1px solid #e5e7eb; border-radius: 10px;">
+                  <div style="font-size: 13px; color: #475569;">Account email</div>
+                  <div style="font-size: 15px; font-weight: 600; color: #0f172a; margin-top: 4px;">{{ email }}</div>
+                </div>
+              </td>
+            </tr>
+
+            <!-- CTA -->
+            <tr>
+              <td align="center" style="padding: 18px 36px 24px 36px;">
+                <a href="{{ verification_link }}" style="display: inline-block; background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 100%); color: #ffffff; text-decoration: none; font-weight: 700; font-size: 16px; padding: 14px 28px; border-radius: 10px; box-shadow: 0 6px 18px rgba(37, 99, 235, 0.25);">
+                  Verify Email Address
+                </a>
+              </td>
+            </tr>
+
+            <!-- Link fallback -->
+            <tr>
+              <td style="padding: 0 36px 24px 36px; font-size: 13px; color: #475569; line-height: 1.6;">
+                If the button does not work, copy and paste this link into your browser:
+                <div style="word-break: break-all; color: #1d4ed8; font-weight: 600;">{{ verification_link }}</div>
+              </td>
+            </tr>
+
+            <!-- Security note -->
+            <tr>
+              <td style="padding: 0 36px 24px 36px; font-size: 13px; color: #64748b; line-height: 1.6;">
+                If you did not create this account, you can safely ignore this email. For help, reply to this message or contact support.
+              </td>
+            </tr>
+
+            <!-- Footer -->
+            <tr>
+              <td style="padding: 18px 36px 28px 36px; background-color: #f8fafc; font-size: 12px; color: #64748b; line-height: 1.6; border-top: 1px solid #e5e7eb;">
+                <div style="font-weight: 600; color: #334155;">Tech_Pulse</div>
+                <div>Security and product updates for modern teams.</div>
+                <div style="margin-top: 6px;">This is an automated message. Please do not share your verification link.</div>
+              </td>
+            </tr>
+          </table>
+
+          <div style="font-size: 12px; color: #94a3b8; margin-top: 16px;">
+            Need help? Contact support@tech_pulse.com
+          </div>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

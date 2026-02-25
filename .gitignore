@@ -1,0 +1,25 @@
+# Enviroment variables
+.env
+.env.local
+.env.*.local
+.env.production
+.env.testing
+
+# Logs
+logs
+*.log
+
+# Cache
+.cache
+.pycache
+__pycache__
+*.py[cod]
+
+# Database
+*.sqlite3
+db.sqlite3
+.db
+
+# Codebase 
+.vscode/
+.idea/

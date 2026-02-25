@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Verify Account | Tech Pulse</title>
+    <style>
+      :root {
+        --ink: #0f172a;
+        --muted: #475569;
+        --line: #e2e8f0;
+        --surface: #ffffff;
+        --bg-a: #f8fbff;
+        --bg-b: #eaf2ff;
+        --brand-a: #0f3ea8;
+        --brand-b: #1d74d8;
+        --ok-a: #047857;
+        --ok-b: #10b981;
+        --danger: #b42318;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: "Segoe UI", "Trebuchet MS", Arial, sans-serif;
+        color: var(--ink);
+        background:
+          radial-gradient(circle at 8% 12%, #ffffff 0%, transparent 44%),
+          radial-gradient(circle at 84% 8%, #dbeafe 0%, transparent 35%),
+          linear-gradient(155deg, var(--bg-a) 0%, var(--bg-b) 100%);
+        display: grid;
+        place-items: center;
+        padding: 24px;
+      }
+
+      .card {
+        width: min(100%, 540px);
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        padding: 30px;
+        box-shadow: 0 16px 40px rgba(15, 23, 42, 0.12);
+        animation: rise 420ms ease-out;
+      }
+
+      .topline {
+        display: inline-block;
+        font-weight: 700;
+        letter-spacing: 0.6px;
+        font-size: 0.72rem;
+        text-transform: uppercase;
+        color: #0b4ccf;
+        background: #e6f0ff;
+        padding: 7px 10px;
+        border-radius: 999px;
+      }
+
+      h1 {
+        margin: 14px 0 8px;
+        font-size: clamp(1.45rem, 2.4vw, 1.9rem);
+      }
+
+      p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.65;
+      }
+
+      .token-error {
+        margin-top: 18px;
+        border-radius: 12px;
+        border: 1px solid #fecaca;
+        background: #fff1f2;
+        color: #9f1239;
+        padding: 13px 14px;
+      }
+
+      .cta {
+        margin-top: 22px;
+        width: 100%;
+        border: none;
+        border-radius: 12px;
+        padding: 14px 18px;
+        color: #fff;
+        font-weight: 700;
+        font-size: 1rem;
+        cursor: pointer;
+        background: linear-gradient(135deg, var(--brand-a) 0%, var(--brand-b) 100%);
+        box-shadow: 0 8px 22px rgba(30, 82, 180, 0.32);
+        transition: transform 160ms ease, filter 160ms ease;
+      }
+
+      .cta:hover {
+        transform: translateY(-1px);
+        filter: brightness(1.04);
+      }
+
+      .cta:disabled {
+        cursor: not-allowed;
+        transform: none;
+        filter: grayscale(0.2) brightness(0.85);
+      }
+
+      .status {
+        margin-top: 14px;
+        min-height: 24px;
+        font-weight: 600;
+      }
+
+      .status.error {
+        color: var(--danger);
+      }
+
+      .success {
+        display: none;
+        margin-top: 18px;
+        border: 1px solid #bbf7d0;
+        border-radius: 14px;
+        background: #ecfdf3;
+        padding: 16px;
+        animation: pop 280ms ease-out;
+      }
+
+      .success strong {
+        display: block;
+        color: #065f46;
+        margin-bottom: 4px;
+      }
+
+      .loader {
+        width: 16px;
+        height: 16px;
+        border: 2px solid rgba(255, 255, 255, 0.45);
+        border-top-color: #ffffff;
+        border-radius: 50%;
+        display: inline-block;
+        vertical-align: middle;
+        margin-right: 8px;
+        animation: spin 850ms linear infinite;
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      @keyframes rise {
+        from {
+          opacity: 0;
+          transform: translateY(16px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes pop {
+        from {
+          opacity: 0;
+          transform: scale(0.98);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="card">
+      <span class="topline">Tech Pulse Security</span>
+      <h1>Verify your account</h1>
+      <p>
+        Confirm your email to activate your account. Click the button below to
+        complete verification.
+      </p>
+
+      <div id="tokenError" class="token-error" style="display: none;">
+        Invalid or missing verification link. Please request a new verification
+        email.
+      </div>
+
+      <button id="verifyButton" class="cta" type="button">Verify account</button>
+      <div id="statusMessage" class="status" aria-live="polite"></div>
+
+      <section id="successBox" class="success" aria-live="polite">
+        <strong>Account verified successfully</strong>
+        <p id="successText">Redirecting you to login...</p>
+      </section>
+    </main>
+
+    <script>
+      (function () {
+        const button = document.getElementById("verifyButton");
+        const statusMessage = document.getElementById("statusMessage");
+        const successBox = document.getElementById("successBox");
+        const successText = document.getElementById("successText");
+        const tokenError = document.getElementById("tokenError");
+        const loginUrl = __LOGIN_URL_JSON__;
+        const params = new URLSearchParams(window.location.search);
+        const token = params.get("token");
+
+        if (!token) {
+          button.disabled = true;
+          tokenError.style.display = "block";
+          return;
+        }
+
+        const setLoading = (isLoading) => {
+          button.disabled = isLoading;
+          button.innerHTML = isLoading
+            ? '<span class="loader" aria-hidden="true"></span>Verifying...'
+            : "Verify account";
+        };
+
+        button.addEventListener("click", async function () {
+          setLoading(true);
+          statusMessage.classList.remove("error");
+          statusMessage.textContent = "";
+
+          try {
+            const res = await fetch(
+              `/api/v1/auth/verify?token=${encodeURIComponent(token)}`,
+              {
+                method: "GET",
+                headers: { Accept: "application/json" },
+              }
+            );
+
+            if (!res.ok) {
+              let detail = "Verification failed. Please request a new email.";
+              try {
+                const payload = await res.json();
+                if (payload && payload.detail) {
+                  detail = payload.detail;
+                }
+              } catch (_) {}
+              throw new Error(detail);
+            }
+
+            successBox.style.display = "block";
+            button.style.display = "none";
+            statusMessage.textContent = "";
+
+            let seconds = 5;
+            successText.textContent = `Redirecting you to login in ${seconds} seconds...`;
+            const interval = setInterval(function () {
+              seconds -= 1;
+              successText.textContent = `Redirecting you to login in ${seconds} seconds...`;
+              if (seconds <= 0) {
+                clearInterval(interval);
+                window.location.href = loginUrl;
+              }
+            }, 1000);
+          } catch (error) {
+            statusMessage.textContent =
+              error.message || "Verification failed. Please try again.";
+            statusMessage.classList.add("error");
+            setLoading(false);
+          }
+        });
+      })();
+    </script>
+  </body>
+</html>
