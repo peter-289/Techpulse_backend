@@ -8,7 +8,7 @@ class GenderEnum(str, Enum):
     PREFER_NOT_TO_SAY = "PREFER_NOT_TO_SAY"
 
 class UserStatus(str, Enum):
-    UNAPROVED = "UNAPPROVED"
+    UNAPPROVED = "UNAPPROVED"
     VERIFIED = "VERIFIED"
     SUSPENDED = "SUSPENDED"  
 

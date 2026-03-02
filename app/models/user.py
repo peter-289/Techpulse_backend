@@ -26,7 +26,7 @@ class User(Base):
      email: Mapped[str] = mapped_column(String(255), unique=True, nullable=False, index=True)
      gender: Mapped[GenderEnum] = mapped_column(nullable=False, default=GenderEnum.PREFER_NOT_TO_SAY)
      password_hash: Mapped[str] = mapped_column(String(255), nullable=False)
-     status: Mapped[UserStatus] = mapped_column(nullable=False, default=UserStatus.UNAPROVED)
+     status: Mapped[UserStatus] = mapped_column(nullable=False, default=UserStatus.UNAPPROVED)
      role: Mapped[RoleEnum] = mapped_column(nullable=False, default=RoleEnum.USER)
      verification_email_last_sent_at: Mapped[datetime | None] = mapped_column(nullable=True)
      verification_email_retry_count: Mapped[int] = mapped_column(nullable=False, default=0)
