@@ -94,7 +94,7 @@ class AuthService:
         refresh_hash = self._hash_refresh_token(refresh_token)
         expires_at = datetime.now(timezone.utc) + timedelta(days=settings.REFRESH_TOKEN_EXPIRE_DAYS)
 
-        session = UserSession( # pragma no cover - not easily testable without DB access
+        session = UserSession(
             user_id=user_id,
             refresh_token_hash=refresh_hash,
             expires_at=expires_at,

@@ -23,6 +23,7 @@ from app.api.v1.software_packages import router as software_package_router
 from app.api.v1.admin import router as admin_router
 from app.api.v1.analytics import router as analytics_router
 
+# Configure logging
 configure_logging()
 logger = logging.getLogger(__name__)
 
@@ -46,9 +47,10 @@ def _normalize_origins(raw_origins: str) -> list[str]:
             normalized.append(clean)
     return normalized
 
-
+# Origins
 origins = _normalize_origins(settings.FRONTEND_URL)
 
+# Middlewares
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins or ["http://localhost:3000"],
@@ -77,7 +79,7 @@ async def startup():
           )
           logging.info("[startup] Verification email recovery loop started.")
 
-
+# Shutdown 
 @app.on_event("shutdown")
 async def shutdown():
     stop_event = getattr(app.state, "email_recovery_stop_event", None)
@@ -88,7 +90,7 @@ async def shutdown():
         logging.info("[shutdown] Verification email recovery loop stopped.")
      
 
-
+# Root 
 @app.get("/")
 async def read_root():
     return {

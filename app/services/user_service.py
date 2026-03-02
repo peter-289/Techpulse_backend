@@ -25,9 +25,11 @@ class UserService:
             # Hash password
             pass_hash = hash_password(payload.password)
             # Check for existing username or email
-            existing_user = self.uow.user_repo.get_user_by_username_or_email(payload.username, payload.email)
-            if existing_user:
-                raise ConflictError("Username or email already exists.")
+            existing_user = self.uow.user_repo.get_user_by_email(payload.email)
+            if existing_user.email == payload.email:
+                raise ConflictError("Email already exists.")
+            if existing_user.username == payload.username:
+                raise ConflictError("Username already exists.")
             # create user
             user = User(
                 full_name=payload.full_name,
