@@ -6,10 +6,6 @@ from app.models import (
     project,
     resource,
     security_alert,
-    software_package,
-    file_blob,
-    file_version,
-    upload_session,
 )
 from app.database.db_setup import Base, engine
 from asyncio.log import logger

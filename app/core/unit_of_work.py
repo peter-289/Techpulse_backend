@@ -7,7 +7,6 @@ from app.repositories.session import SessionRepo
 from app.repositories.chat_message import ChatMessageRepo
 from app.repositories.project import ProjectRepo
 from app.repositories.resource import ResourceRepo
-from app.repositories.software_package import SoftwarePackageRepo
 
 class UnitOfWork:
     """Unit of Work pattern implementation for managing database transactions.
@@ -28,7 +27,6 @@ class UnitOfWork:
         self._chat_message_repo = None
         self._project_repo = None
         self._resource_repo = None
-        self._software_package_repo = None
 
 
     @property
@@ -60,12 +58,6 @@ class UnitOfWork:
         if self._resource_repo is None:
             self._resource_repo = ResourceRepo(self.session)
         return self._resource_repo
-
-    @property
-    def software_package_repo(self) -> SoftwarePackageRepo:
-        if self._software_package_repo is None:
-            self._software_package_repo = SoftwarePackageRepo(self.session)
-        return self._software_package_repo
         
 
     def commit(self) -> None:

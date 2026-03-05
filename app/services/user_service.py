@@ -11,7 +11,6 @@ from sqlalchemy.exc import IntegrityError
 
 logger = logging.getLogger(__name__)
 
-
 class UserService:
     def __init__(self, uow: UnitOfWork):
         self.uow = uow

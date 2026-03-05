@@ -29,6 +29,7 @@ class AuthService:
     
     # Authenticate user and return a user and a token
     def authenticate_user(self, username: str, password: str):
+        # Normalize username and check if the user actually passes it. The same with password.
         normalized_username = (username or "").strip()
         if not normalized_username:
             raise ValidationError("Username is required")
@@ -88,7 +89,8 @@ class AuthService:
             )
         except DomainError as e:
             raise e
-
+        
+    # Create a user session
     def create_session(self, user_id: int, user_agent: str | None, ip_address: str | None):
         refresh_token = secrets.token_urlsafe(32)
         refresh_hash = self._hash_refresh_token(refresh_token)
@@ -105,6 +107,7 @@ class AuthService:
             session = self.uow.session_repo.add_session(session)
         return refresh_token, session
 
+    # 
     def request_password_reset(self, email: str, background_tasks) -> str:
         # Intentional generic response to avoid account enumeration.
         normalized_email = (email or "").strip().lower()

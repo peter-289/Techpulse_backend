@@ -1,5 +1,7 @@
 ﻿aioredis==2.0.1
 aiosmtplib==5.1.0
+aiofiles==24.1.0
+aiosqlite==0.21.0
 alembic==1.18.3
 annotated-types==0.7.0
 anyio==4.12.1
@@ -31,6 +33,7 @@ MarkupSafe==3.0.3
 packaging==26.0
 pluggy==1.6.0
 psycopg2-binary==2.9.10
+asyncpg==0.30.0
 pyasn1==0.6.2
 pycparser==3.0
 pydantic==2.9.2
@@ -54,3 +57,4 @@ typing-inspection==0.4.2
 typing_extensions==4.15.0
 urllib3==2.6.3
 uvicorn==0.30.6
+

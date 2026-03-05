@@ -12,10 +12,6 @@ from app.models import (
     chat_message,
     project,
     resource,
-    software_package,
-    file_blob,
-    file_version,
-    upload_session,
 )  # noqa: F401
 
 # this is the Alembic Config object, which provides
