@@ -176,3 +176,6 @@ Alembic operations such as `status`, `upgrade`, `downgrade`, `revision`, and
   management, billing, and admin/security workflows.
 - Static frontend assets are mounted in production if a build directory is
   present.
+
+# Notes
+- This project was mainly for learning purposes only, not anything serious😀🫡

@@ -30,7 +30,7 @@ class Version:
     created_at: datetime = field(default_factory=utc_now)
     updated_at: datetime = field(default_factory=utc_now)
     published_at: datetime | None = None
-    artifact: Artifact | None = None
+    artifact: list[Artifact] | None = None
 
     def __post_init__(self) -> None:
         self.created_at = _ensure_utc(self.created_at)
@@ -47,8 +47,7 @@ class Version:
 
     def publish(self) -> None:
         """ Publish a version."""
-        if self.status == VersionStatus.REVOKED:
-            raise InvalidStateTransitionError("Revoked version cannot be published.")
+        self._ensure_modifiable()
         if self.artifact is None:
             raise InvalidStateTransitionError("Version requires artifact before publishing.")
         if self.artifact.status != ArtifactStatus.ACTIVE:

@@ -132,3 +132,47 @@ class PaymentResourceType(StrEnum):
     SUBSCRIPTION = "subscription"
     LICENCE = "licence" 
 
+
+# PROJECT ENUM
+class ProjectVisibility(StrEnum):
+    """Represents who can discover a project.
+
+       `PUBLIC:` 
+          - Everyone can view the project.
+       `PRIVATE:`
+          - Only the creator can view the project.
+
+        NOTES:
+          - If the creator chooses private, then all contents published in the project will be private.
+          - `PRIVATE` is usefull when work is in progress and not ready for publication.
+          
+    """
+    PUBLIC = "public"
+    PRIVATE = "private"
+
+    @property
+    def is_public(self) -> bool:
+        return self is ProjectVisibility.PUBLIC
+
+    @property
+    def is_private(self) -> bool:
+        return self is ProjectVisibility.PRIVATE
+    
+
+class ProjectStatus(StrEnum):
+    """Represents the lifecycle state of the object.
+
+       `ACTIVE:`
+         - The project is operational and can accept new software.
+       `ARCHIVED:`
+         - The project is read-only and can not accept new software.
+       `DELETED:`
+         - The project has been soft deleted and is no longer modifiable.
+    """
+    ACTIVE = "active"
+    ARCHIVED = "archived"
+    DELETED = "deleted"
+
+    @property
+    def can_archive(self) -> bool:
+        return self is ProjectStatus.ACTIVE

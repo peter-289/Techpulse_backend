@@ -4,9 +4,9 @@ from pathlib import Path
 
 from app.exceptions.exceptions import ValidationError
 from app.infrastructure.external_apis.scanner_service.malware_scanner import LocalHeuristicScanner
-from app.modules.projects.project_hub_service import ProjectHubService
-from app.modules.software_management.software.exceptions import SoftwareDomainError
-from app.modules.software_management.software_service import SoftwareService
+from app.modules.projects.application.services.project_service import ProjectHubService
+from app.modules.software_management.domain.exceptions import SoftwareDomainError
+from app.modules.software_management.application import SoftwareService
 
 
 def test_project_file_save_stops_when_limit_is_exceeded(tmp_path: Path) -> None:

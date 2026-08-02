@@ -4,7 +4,7 @@ import secrets
 import logging
 from fastapi.concurrency import run_in_threadpool
 
-from app.modules.user.rules import validate_password_strength
+from app.modules.user.application.services.rules import validate_password_strength
 from app.modules.security.password_manager import hash_password, verify_password
 from app.modules.security.token_manager import TokenManager
 from app.infrastructure.database.unit_of_work import UnitOfWork
@@ -14,7 +14,7 @@ from app.infrastructure.database.models.session import UserSession
 from app.infrastructure.email.email_service.email_worker import queue_verification_email
 from app.infrastructure.email.email_service.email_service import send_password_reset_email
 from app.core.config import settings
-from app.modules.shared.dependencies import get_email_user, get_password_reset_user, get_abuse_protection
+from app.modules.shared.dependencies import get_email_user, get_password_reset_user
 from app.infrastructure.database.models.user import User
 from app.modules.security.abuse_protection import AbuseProtection
 

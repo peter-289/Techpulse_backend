@@ -16,12 +16,12 @@ from app.exceptions.handlers import register_exception_handlers
 from app.modules.security.audit_middleware import AuditMiddleware
 
 
-from app.modules.user.user_router import router as user_router
+from app.modules.user.api.router.user_router import router as user_router
 from app.modules.authentication.auth_router import router as auth_router
-from app.modules.user.support_chat_router import router as support_chat_router
-from app.modules.projects.projects_router import router as project_router
+from app.modules.user.api.router.support_chat_router import router as support_chat_router
+from app.modules.projects.api.router.projects_router import router as project_router
 from app.modules.resource.resources_router import router as resource_router
-from app.modules.user.admin_router import router as admin_router
+from app.modules.user.api.router.admin_router import router as admin_router
 from app.modules.analytics.analytics_router import router as analytics_router
 from app.modules.software_management.api.routers.software_router import router as software_management_router
 from app.modules.software_management.api.routers.category_router import router as category_router

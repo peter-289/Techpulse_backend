@@ -2,10 +2,10 @@ from contextlib import asynccontextmanager
 from typing import AsyncGenerator
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.modules.user.user_repo import UserRepo
-from app.modules.user.session_repo import SessionRepo
-from app.modules.user.support_chat_repo import ChatMessageRepo
-from app.modules.projects.project_repo import ProjectRepo
+from app.modules.user.infrastructure.persistence.repository.user_repo import UserRepo
+from app.modules.user.infrastructure.persistence.repository.session_repo import SessionRepo
+from app.modules.user.infrastructure.persistence.repository.support_chat_repo import ChatMessageRepo
+from app.modules.projects.infrastructure.persistence.repository.project_repo import ProjectRepo
 from app.modules.resource.resource_repo import ResourceRepo
 from app.modules.security.audit import AuditRepository
 from app.modules.software_management.infrastructure.persistence.repositories.sqlalchemy_software_repository import SQLAlchemySoftwareRepository
@@ -107,6 +107,7 @@ class UnitOfWork:
     async def commit(self) -> None:
 
         """Commit the current transaction to the database."""
+        # TODO: Add an event dispacther for domain events.
         await self.session.commit()
 
     async def rollback(self) -> None:

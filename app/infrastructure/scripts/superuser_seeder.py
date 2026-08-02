@@ -8,7 +8,7 @@ from app.core.config import settings
 from app.modules.security.password_manager import hash_password
 from app.modules.shared.enums import GenderEnum, RoleEnum, UserStatus
 from app.infrastructure.database.models.user import User
-from app.modules.user.user_repo import UserRepo
+from app.modules.user.infrastructure.persistence.repository.user_repo import UserRepo
 
 
 logger = logging.getLogger(__name__)

@@ -16,6 +16,7 @@ from app.modules.software_management.domain.exceptions import InvalidStateTransi
 from app.modules.software_management.domain.value_objects import SemVer
 from app.modules.software_management.domain.entities.version import Version
 from app.modules.billing.domain.value_objects import Currency, Money
+from app.modules.shared.root_aggregate import AggregateRoot
 
 
 
@@ -26,7 +27,7 @@ def _ensure_utc(value: datetime) -> datetime:
 
 
 @dataclass(slots=True)
-class Software:
+class Software(AggregateRoot):
     id: UUID
     name: str
     description: str
@@ -47,7 +48,7 @@ class Software:
     deleted_by: UUID | None = None
     deleted_at: datetime | None = None
 
-    _events: list[SoftwareEvent] = field(default_factory=list, init=False, repr=False)
+   # _events: list[SoftwareEvent] = field(default_factory=list, init=False, repr=False)
 
     @classmethod
     def create(
@@ -87,7 +88,8 @@ class Software:
         self.updated_at = _ensure_utc(self.updated_at)
 
     def _emit_created(self) -> "Software":
-        self._events.append(software_created(self.id, self.owner_id))
+        """Emit a Software created event."""
+       # self._record_events.software_created(self.id, self.owner_id))
         return self
 
     # Check if a software is modifiable.
@@ -318,7 +320,6 @@ class Software:
     def published_versions(self) -> list[Version]:
         """Return all versions that are published."""
         return [v for v in self.versions if v.is_published()]
-
 
 
     def increment_download_count(self) -> None:
